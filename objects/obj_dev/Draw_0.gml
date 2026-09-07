@@ -115,6 +115,10 @@
 						draw_set_colour(c_white)
 						break;
 				}
+				
+				var tile_info = tileset_get_info(tileset)
+				var tile_index = tile_get_index(tile)
+				if(tile_index < tile_info.tile_count)
 				draw_tile(tileset, tile, 0, _x, _y);
 				draw_set_colour(c_white)
 				
