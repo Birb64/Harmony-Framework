@@ -85,14 +85,48 @@
 		
 		draw_set_colour(c_white)
 		tiles_detected_length = array_length(tiles_detected);
-		// Draws the tiles
+		
 		for(var i = 0; i < tiles_detected_length; ++i) {
-			if(tiles_detected[i][0]*16 > cx+global.window_width && tiles_detected[i][0]*16 < cx && tiles_detected[i][1]*16 > cy+global.window_width && tiles_detected[i][1]*16 < cy) i++;
-			draw_set_alpha(0.1)
-			draw_rectangle_colour(floor(tiles_detected[i][0]*16),floor(tiles_detected[i][1]*16),floor(tiles_detected[i][0]*16+16),floor(tiles_detected[i][1]*16+16),#FF0000,#AAAA00,#00AAAA,#0000FF,false)
-			draw_set_alpha(0.05)
-			draw_rectangle_colour(floor(tiles_detected[i][0]*16),floor(tiles_detected[i][1]*16),floor(tiles_detected[i][0]*16+16),floor(tiles_detected[i][1]*16+16),#0000FF,#00AAAA,#AAAA00,#FF0000,true)
-			draw_set_alpha(1);
+			// Draws the tiles
+			var tilelayer, tileset, tile, _x, _y;
+			_x = floor(tiles_detected[i][0]*16);
+			_y = floor(tiles_detected[i][1]*16);
+			for(var j = 0; j < array_length(global.col_tile); ++j) {
+				tilelayer = layer_tilemap_get_id(global.col_tile[j]);  //Get tilelayer for the tileset
+				tileset = tilemap_get_tileset(tilelayer);           //Get the used tileset
+				tile = tilemap_get_at_pixel(tilelayer, _x, _y);     //Get current tile
+
+				if(_x > cx+global.window_width && _x < cx && _y > cy+global.window_width && _y < cy) i++;
+            
+				draw_set_alpha(0.5);
+				// set the color of the collision tile
+				switch(global.col_tile[j]) {
+					case "CollisionA":
+						draw_set_colour(c_red);
+						break;
+					case "CollisionB":
+						draw_set_colour(c_blue);
+						break;
+					case "CollisionSemi":
+						draw_set_colour(c_yellow);
+						draw_set_alpha(0.25);
+						break;
+					default:
+						draw_set_colour(c_white)
+						break;
+				}
+				draw_tile(tileset, tile, 0, _x, _y);
+				draw_set_colour(c_white)
+				
+				// Uncomment for full tile detection testing
+				//draw_set_alpha(0.065);
+				//draw_rectangle_colour(_x,_y,_x+16,_y+16,#FF0000,#AAAA00,#00AAAA,#0000FF,false);
+
+				//draw_set_alpha(0.035);
+				//draw_rectangle_colour(_x,_y,_x+16,_y+16,#0000FF,#00AAAA,#AAAA00,#FF0000,true);
+
+				draw_set_alpha(1);
+			}
 		}
 		// Resets the tiles for the next frame
 		tiles_detected = [];
