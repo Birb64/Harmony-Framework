@@ -62,7 +62,7 @@ function dev_menu_add_option_flag(name, variable)
 /// @description						Function used for showing dev messages in-game
 /// @param {Real} variable			Variable data
 /// @param {Real} dev_id			Specific row to change(-1 for automatic | Max 31)
-function show_dev_message(variable, dev_id = -1) {
+function printd(variable, dev_id = -1) {
 	if(dev_id == -1) { 
 		array_push(obj_dev.dev_messages, string(variable));
 		obj_dev.dev_messages_length = max(obj_dev.dev_messages_length+1, 32);
@@ -71,3 +71,24 @@ function show_dev_message(variable, dev_id = -1) {
 		obj_dev.dev_messages[dev_id] = variable;
 	}
 }
+
+// Alias for gamemaker's debug message
+#macro printf show_debug_message
+
+// Alias for gamemaker's debug message
+#macro printf_ext show_debug_message_ext
+
+// Alias for gamemaker's warning message
+#macro printw show_error
+
+// Alias for gamemaker's question message
+#macro printq show_question
+
+// Alias for gamemaker's question message async
+#macro printqa show_question_async
+
+// Alias for gamemaker's message
+#macro printm show_message
+
+// Alias for gamemaker's message async
+#macro printma show_message_async
